@@ -79,6 +79,7 @@ button, input {
   background: rgba(52, 37, 29, 0.97);
   color: #fff;
   transition: box-shadow 0.2s ease;
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .site-header.is-compact {
@@ -137,7 +138,7 @@ button, input {
   position: relative;
   width: min(1120px, 100%);
   margin: 0 auto;
-  padding: 58px 24px 68px;
+  padding: calc(58px + env(safe-area-inset-top, 0px)) 24px 68px;
 }
 
 .eyebrow {
@@ -570,7 +571,7 @@ main#main {
     min-height: 365px;
   }
   .hero-content {
-    padding: 54px 22px 66px;
+    padding: calc(54px + env(safe-area-inset-top, 0px)) 22px 66px;
   }
   .hero-copy {
     max-width: 350px;
