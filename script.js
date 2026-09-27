@@ -80,8 +80,17 @@
     errorBox.appendChild(message);
   }
 
+  // لود بدون کَش و با شناسه زمان یکتا
   Promise.all(sections.map(function (section) {
-    return fetch(section.path).then(function (response) {
+    var noCacheUrl = encodeURI(section.path) + "?v=" + Date.now() + "_" + Math.random().toString(36).slice(2);
+    return fetch(noCacheUrl, {
+      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0"
+      }
+    }).then(function (response) {
       if (!response.ok) throw new Error("Could not load " + section.path);
       return response.text();
     }).then(function (text) { return parseItems(text, section.id); });
