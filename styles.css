@@ -138,7 +138,7 @@ button, input {
   position: relative;
   width: min(1120px, 100%);
   margin: 0 auto;
-  padding: calc(58px + env(safe-area-inset-top, 0px)) 24px 68px;
+  padding: calc(28px + env(safe-area-inset-top, 0px)) 24px 68px;
 }
 
 .eyebrow {
