@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#34251d">
+  <meta name="description" content="منوی کافه چای بار؛ غذا، صبحانه و نوشیدنی‌های کافه.">
+  <title>منوی کافه چای بار</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+  <!-- فایل‌های منو از پوشه data خوانده می‌شوند؛ برای ویرایش نام و قیمت، فایل‌های متنی را اصلاح کنید. -->
+  <!-- Menu data loaded by script.js: data/غذاها.txt, data/چاشنی‌ها.txt, data/صبحانه.txt, data/نوشیدنی‌ها.txt -->
+</head>
+<body>
+  <a class="skip-link" href="#main">رفتن به منو</a>
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="کافه چای بار، ابتدای صفحه">
+        <span class="brand-name">کافه چای بار</span>
+      </a>
+      <a class="header-menu-link" href="#main">منو <span aria-hidden="true">↓</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- برای تغییر تصویر بنر، فایل banne.png را با تصویر دلخواه جایگزین کنید. -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-photo" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="eyebrow">طعم آشنا، لحظه‌های آرام</p>
+        <h1 id="hero-title">کافه چای بار</h1>
+        <p class="hero-copy">از یک صبحانه‌ی دل‌چسب تا فنجانی قهوه؛ منوی امروز را ببینید.</p>
+        <a class="hero-link" href="#menu-sections">مشاهده منو <span aria-hidden="true">←</span></a>
+      </div>
+      <span class="hero-note" aria-hidden="true">یک مکثِ خوش‌طعم</span>
+    </section>
+
+    <section class="menu-wrap" id="menu-sections" aria-labelledby="menu-title">
+      <div class="menu-heading">
+        <div>
+          <p class="eyebrow eyebrow-dark">به انتخاب شما</p>
+          <h2 id="menu-title">منوی کافه</h2>
+        </div>
+        <p class="menu-intro">هرچه میل دارید، آرام و با حوصله انتخاب کنید.</p>
+      </div>
+
+      <div class="menu-tools">
+        <label class="search-box" for="menu-search">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <span class="visually-hidden">جست‌وجو در منو</span>
+          <input id="menu-search" type="search" placeholder="جست‌وجوی غذا یا نوشیدنی..." autocomplete="off" aria-describedby="search-hint">
+          <button id="clear-search" class="clear-search" type="button" aria-label="پاک کردن جست‌وجو" title="پاک کردن جست‌وجو" hidden>×</button>
+        </label>
+        <span id="search-hint" class="search-hint">برای نمایش دوباره‌ی همه‌ی موارد، جست‌وجو را پاک کنید.</span>
+      </div>
+
+      <div id="menu-status" class="status-message" role="status" aria-live="polite">در حال بارگذاری منو...</div>
+      <div id="menu-error" class="error-message" role="alert" hidden></div>
+      <div id="menu-sections-list" class="sections-grid">
+        <section class="menu-section" data-section="food" aria-labelledby="title-food">
+          <div class="section-heading"><img class="section-image" src="section-food.png" alt="" aria-hidden="true"><div><h3 id="title-food">غذاها</h3><p>غذاهای کافه</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
+          <div class="item-list" id="items-food"></div>
+        </section>
+        <section class="menu-section" data-section="condiments" aria-labelledby="title-condiments">
+          <div class="section-heading"><img class="section-image" src="section-condiments.png" alt="" aria-hidden="true"><div><h3 id="title-condiments">چاشنی‌ها</h3><p>همراهِ انتخاب شما</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
+          <div class="item-list" id="items-condiments"></div>
+        </section>
+        <section class="menu-section" data-section="breakfast" aria-labelledby="title-breakfast">
+          <div class="section-heading"><img class="section-image" src="section-breakfast.png" alt="" aria-hidden="true"><div><h3 id="title-breakfast">صبحانه</h3><p>شروعی خوش‌مزه</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
+          <div class="item-list" id="items-breakfast"></div>
+        </section>
+        <section class="menu-section" data-section="drinks" aria-labelledby="title-drinks">
+          <div class="section-heading"><img class="section-image" src="section-drinks.png" alt="" aria-hidden="true"><div><h3 id="title-drinks">نوشیدنی‌ها</h3><p>گرم و دل‌چسب</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
+          <div class="item-list" id="items-drinks"></div>
+        </section>
+      </div>
+      <p id="no-results" class="no-results" hidden>موردی با این عبارت پیدا نشد. <button type="button" id="reset-search">نمایش همه‌ی منو</button></p>
+    </section>
+
+    <section class="drink-ambience" aria-label="فضای دنج کافه">
+      <div class="ambience-image" role="img" aria-label="فنجان قهوه در فضایی گرم و دنج"></div>
+      <div class="ambience-copy"><span class="ambience-kicker">لحظه‌ای برای خودتان</span><p>چای تازه‌دم یا قهوه‌ای خوش‌عطر؟</p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand"><div><strong>کافه چای بار</strong><p>خوشحالیم که انتخاب‌مان کردید.</p></div></div>
+      <div class="footer-actions">
+        <!-- پیوند مسیریابی نشان؛ برای تغییر مقصد، نشانی این لینک را ویرایش کنید. -->
+        <a class="button button-map" href="https://nshn.ir/7bfZ7l5FYHkn" target="_blank" rel="noopener noreferrer">مسیر‌یابی <span aria-hidden="true">↗</span></a>
+        <button class="button button-share" id="share-menu" type="button">اشتراک‌گذاری منو <span aria-hidden="true">↗</span></button>
+      </div>
+      <p id="share-status" class="share-status" role="status" aria-live="polite"></p>
+    </div>
+    <div class="footer-bottom"><span>© کافه چای بار</span><a href="#top">بازگشت به بالا ↑</a></div>
+  </footer>
+</body>
+</html>
