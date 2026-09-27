@@ -1,0 +1,168 @@
+    .btn-add { background: #27ae60; color: #fff; border: none; border-radius: 8px; padding: 10px; width: 100%; cursor: pointer; font-weight: bold; margin-bottom: 15px; }
+    .btn-save { background: var(--primary); color: #fff; border: none; border-radius: 8px; padding: 12px; width: 100%; cursor: pointer; font-size: 16px; font-weight: bold; }
+    .status { margin-top: 15px; padding: 10px; border-radius: 6px; display: none; text-align: center; }
+    .status.success { background: #2ecc7133; color: #2ecc71; border: 1px solid #2ecc71; }
+    .status.error { background: #e74c3c33; color: #e74c3c; border: 1px solid #e74c3c; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>مدیریت منوی کافه چای بار</h2>
+
+  <div class="form-group">
+    <label>کلید دسترسی (GitHub Token):</label>
+    <input type="password" id="ghToken" placeholder="توکن گیت‌هاب را وارد کنید...">
+  </div>
+
+  <div class="form-group">
+    <label>انتخاب دسته‌بندی منو:</label>
+    <select id="categorySelect" onchange="loadCategoryData()">
+      <option value="غذاها.txt">غذاها</option>
+      <option value="نوشیدنی‌ها.txt">نوشیدنی‌ها</option>
+      <option value="صبحانه.txt">صبحانه</option>
+      <option value="چاشنی‌ها.txt">چاشنی‌ها</option>
+    </select>
+  </div>
+
+  <hr style="border: 0.5px solid var(--border); margin: 20px 0;">
+
+  <div id="itemsContainer">
+    <!-- آیتم‌ها به صورت دینامیک اینجا میان -->
+  </div>
+
+  <button class="btn-add" onclick="addNewItemRow()">➕ افزودن آیتم جدید</button>
+  <button class="btn-save" onclick="saveToGitHub()">💾 ذخیره تغییرات در منو</button>
+
+  <div id="statusBox" class="status"></div>
+</div>
+
+<script>
+  const OWNER = 'softwarebankm';
+  const REPO = 'Coffe_Chay_Bar';
+  let currentFileSha = '';
+
+  // بارگذاری توکن ذخیره شده
+  document.getElementById('ghToken').value = localStorage.getItem('cafe_admin_token') || '';
+  document.getElementById('ghToken').addEventListener('change', (e) => {
+    localStorage.setItem('cafe_admin_token', e.target.value.trim());
+  });
+
+  // هنگام لود صفحه، دسته اول رو لود کن
+  window.onload = () => { loadCategoryData(); };
+
+  async function loadCategoryData() {
+    const fileName = document.getElementById('categorySelect').value;
+    const container = document.getElementById('itemsContainer');
+    container.innerHTML = '<p style="text-align:center;">در حال بارگذاری اطلاعات...</p>';
+    showStatus('', false);
+
+    try {
+      const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/data/${encodeURIComponent(fileName)}`;
+      const token = document.getElementById('ghToken').value.trim();
+      const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+
+      const res = await fetch(url, { headers });
+      if (!res.ok) throw new Error('خطا در دریافت فایل');
+      const data = await res.json();
+      
+      currentFileSha = data.sha; // نگهداری SHA برای آپدیت بعدی
+      const content = decodeURIComponent(escape(atob(data.content))); // دیکود UTF-8
+      
+      renderRows(content);
+    } catch (err) {
+      container.innerHTML = '<p style="color:#e74c3c; text-align:center;">خطا در دریافت فایل از گیت‌هاب.</p>';
+    }
+  }
+
+  function renderRows(content) {
+    const container = document.getElementById('itemsContainer');
+    container.innerHTML = '';
+    const lines = content.split('\n').filter(l => l.trim().length > 0);
+
+    lines.forEach(line => {
+      // فرمت خطوط بر اساس ساختار txt: نام، قیمت یا نام | قیمت
+      const parts = line.includes('،') ? line.split('،') : line.split('|');
+      const name = parts[0] ? parts[0].trim() : '';
+      const price = parts[1] ? parts[1].trim() : '';
+      addNewItemRow(name, price);
+    });
+
+    if (lines.length === 0) {
+      addNewItemRow();
+    }
+  }
+
+  function addNewItemRow(name = '', price = '') {
+    const container = document.getElementById('itemsContainer');
+    const row = document.createElement('div');
+    row.className = 'item-row';
+    row.innerHTML = `
+      <input type="text" placeholder="نام غذا / نوشیدنی" value="${name}" class="item-name" style="flex: 2;">
+      <input type="text" placeholder="قیمت (تومان)" value="${price}" class="item-price" style="flex: 1.2;">
+      <button class="btn-del" onclick="this.parentElement.remove()">🗑️</button>
+    `;
+    container.appendChild(row);
+  }
+
+  async function saveToGitHub() {
+    const token = document.getElementById('ghToken').value.trim();
+    if (!token) {
+      showStatus('لطفاً توکن گیت‌هاب را وارد کنید.', false);
+      return;
+    }
+
+    const fileName = document.getElementById('categorySelect').value;
+    const names = document.querySelectorAll('.item-name');
+    const prices = document.querySelectorAll('.item-price');
+    
+    let lines = [];
+    for (let i = 0; i < names.length; i++) {
+      const n = names[i].value.trim();
+      const p = prices[i].value.trim();
+      if (n) {
+        lines.push(`${n} | ${p}`); // ساختار پیش‌فرض
+      }
+    }
+
+    const newContent = lines.join('\n');
+    const encodedContent = btoa(unescape(encodeURIComponent(newContent))); // انکود UTF-8 به Base64
+
+    showStatus('در حال ارسال تغییرات به سرور...', true);
+
+    try {
+      const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/data/${encodeURIComponent(fileName)}`;
+      const res = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: `بروزرسانی قیمت‌های ${fileName} از پنل ادمین`,
+          content: encodedContent,
+          sha: currentFileSha
+        })
+      });
+
+      if (!res.ok) throw new Error('خطا در ذخیره تغییرات');
+      
+      const resData = await res.json();
+      currentFileSha = resData.content.sha;
+      showStatus('✅ تغییرات با موفقیت ذخیره و در منو اعمال شد!', true);
+    } catch (err) {
+      showStatus('❌ خطا در ذخیره‌سازی! لطفاً توکن یا دسترسی را بررسی کنید.', false);
+    }
+  }
+
+  function showStatus(msg, isSuccess) {
+    const box = document.getElementById('statusBox');
+    if (!msg) { box.style.display = 'none'; return; }
+    box.style.display = 'block';
+    box.className = 'status ' + (isSuccess ? 'success' : 'error');
+    box.innerText = msg;
+  }
+</script>
+
+</body>
+</html>
