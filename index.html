@@ -11,11 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
-  <!-- فایل‌های منو از پوشه data خوانده می‌شوند؛ برای ویرایش نام و قیمت، فایل‌های متنی را اصلاح کنید. -->
-  <!-- Menu data loaded by script.js: data/صبحانه.txt, data/غذاها.txt, data/چاشنی‌ها.txt, data/نوشیدنی‌ها.txt -->
   <!-- تنظیمات تبدیل به اپلیکیشن (PWA) -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1a1a1a">
   
   <!-- برای آیفون / iOS -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -36,7 +33,7 @@
   </header>
 
   <main id="main">
-    <!-- برای تغییر تصویر بنر، فایل banne.png را با تصویر دلخواه جایگزین کنید. -->
+    <!-- بنر اصلی -->
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-photo" aria-hidden="true"></div>
       <div class="hero-content">
@@ -47,6 +44,28 @@
       </div>
       <span class="hero-note" aria-hidden="true">یک مکثِ خوش‌طعم</span>
     </section>
+
+    <!-- نوار کلیدهای منو: دقیقاً زیر بنر و با حالت چسبان -->
+    <nav class="category-nav-bar" id="category-nav-bar" aria-label="دسته‌بندی‌های منو">
+      <div class="category-nav-inner">
+        <a href="#breakfast" class="category-chip">
+          <span class="chip-icon">🍳</span>
+          <span class="chip-text">صبحانه</span>
+        </a>
+        <a href="#food" class="category-chip">
+          <span class="chip-icon">🍲</span>
+          <span class="chip-text">غذاها</span>
+        </a>
+        <a href="#condiments" class="category-chip">
+          <span class="chip-icon">🥗</span>
+          <span class="chip-text">چاشنی‌ها</span>
+        </a>
+        <a href="#drinks" class="category-chip">
+          <span class="chip-icon">☕</span>
+          <span class="chip-text">نوشیدنی‌ها</span>
+        </a>
+      </div>
+    </nav>
 
     <section class="menu-wrap" id="menu-sections" aria-labelledby="menu-title">
       <div class="menu-heading">
@@ -66,26 +85,6 @@
         </label>
         <span id="search-hint" class="search-hint">برای نمایش دوباره‌ی همه‌ی موارد، جست‌وجو را پاک کنید.</span>
       </div>
-
-      <!-- نوار چیپ‌های دسته‌بندی سریع -->
-      <nav class="category-nav-bar" aria-label="دسته‌بندی‌های منو">
-        <a href="#breakfast" class="category-chip">
-          <span class="chip-icon">🍳</span>
-          <span class="chip-text">صبحانه</span>
-        </a>
-        <a href="#food" class="category-chip">
-          <span class="chip-icon">🍲</span>
-          <span class="chip-text">غذاها</span>
-        </a>
-        <a href="#condiments" class="category-chip">
-          <span class="chip-icon">🥗</span>
-          <span class="chip-text">چاشنی‌ها</span>
-        </a>
-        <a href="#drinks" class="category-chip">
-          <span class="chip-icon">☕</span>
-          <span class="chip-text">نوشیدنی‌ها</span>
-        </a>
-      </nav>
 
       <div id="menu-status" class="status-message" role="status" aria-live="polite">در حال بارگذاری منو...</div>
       <div id="menu-error" class="error-message" role="alert" hidden></div>
@@ -127,7 +126,6 @@
     <div class="footer-inner">
       <div class="footer-brand"><div><strong>کافه چای بار</strong><p>خوشحالیم که انتخاب‌مان کردید</p></div></div>
       <div class="footer-actions">
-        <!-- پیوند مسیریابی نشان؛ برای تغییر مقصد، نشانی این لینک را ویرایش کنید. -->
         <a class="button button-map" href="https://nshn.ir/7bfZ7l5FYHkn" target="_blank" rel="noopener noreferrer">مسیر‌یابی <span aria-hidden="true">↗</span></a>
         <button class="button button-share" id="share-menu" type="button">اشتراک‌گذاری منو <span aria-hidden="true">↗</span></button>
       </div>
