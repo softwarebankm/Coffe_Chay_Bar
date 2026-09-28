@@ -116,7 +116,11 @@
   });
 
   var header = document.getElementById("site-header");
-  function updateHeader() { header.classList.toggle("is-compact", window.scrollY > 40); }
+  var categoryNav = document.getElementById("category-nav-bar");
+
+  function updateHeader() { 
+    header.classList.toggle("is-compact", window.scrollY > 40); 
+  }
   window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
 
@@ -146,7 +150,7 @@
     }
   });
 
-  // اسکرول هوشمند چیپ‌های دسته‌بندی
+  // اسکرول هوشمند کلیدهای دسته‌بندی با محاسبه ارتفاع هدر و نوار چسبان
   var chips = document.querySelectorAll(".category-chip");
   chips.forEach(function (chip) {
     chip.addEventListener("click", function (event) {
@@ -160,9 +164,12 @@
 
       if (target) {
         event.preventDefault();
-        var headerOffset = (header ? header.offsetHeight : 0) + 70;
+        var headerHeight = header ? header.offsetHeight : 0;
+        var navHeight = categoryNav ? categoryNav.offsetHeight : 0;
+        var totalOffset = headerHeight + navHeight + 12;
+
         var elementPosition = target.getBoundingClientRect().top;
-        var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        var offsetPosition = elementPosition + window.pageYOffset - totalOffset;
 
         window.scrollTo({
           top: offsetPosition,
