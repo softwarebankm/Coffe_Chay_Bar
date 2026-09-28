@@ -120,7 +120,7 @@
   document.getElementById("share-menu").addEventListener("click", function () {
   var message = document.getElementById("share-status");
   var cleanUrl = window.location.origin + window.location.pathname.replace(/\/index\.html$/, "/") + window.location.search;
-  var shareData = { title: "منوی کافه چای بار", text: "منوی کافه چای بار", url: cleanUrl };
+  var shareData = { url: cleanUrl };
   if (navigator.share) {
     navigator.share(shareData).then(function () { message.textContent = "منو با موفقیت به اشتراک گذاشته شد."; })
       .catch(function (error) { if (error.name !== "AbortError") copyLink(); });
