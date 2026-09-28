@@ -2,9 +2,9 @@
   "use strict";
 
   var sections = [
+    { id: "breakfast", path: "data/صبحانه.txt" },
     { id: "food", path: "data/غذاها.txt" },
     { id: "condiments", path: "data/چاشنی‌ها.txt" },
-    { id: "breakfast", path: "data/صبحانه.txt" },
     { id: "drinks", path: "data/نوشیدنی‌ها.txt" }
   ];
   var searchInput = document.getElementById("menu-search");
@@ -49,6 +49,7 @@
       });
       var list = document.getElementById("items-" + section.id);
       var sectionElement = document.querySelector('[data-section="' + section.id + '"]');
+      if (!sectionElement || !list) return;
       var count = sectionElement.querySelector(".section-count");
       list.replaceChildren();
       matched.forEach(function (item) { list.appendChild(renderItem(item)); });
@@ -58,9 +59,11 @@
         empty.textContent = query ? "موردی برای نمایش نیست." : "هنوز موردی ثبت نشده است.";
         list.appendChild(empty);
       }
-      count.textContent = String(matched.length).replace(/[0-9]/g, function (digit) {
-        return "۰۱۲۳۴۵۶۷۸۹"[Number(digit)];
-      });
+      if (count) {
+        count.textContent = String(matched.length).replace(/[0-9]/g, function (digit) {
+          return "۰۱۲۳۴۵۶۷۸۹"[Number(digit)];
+        });
+      }
       sectionElement.hidden = Boolean(query) && matched.length === 0;
       visibleTotal += matched.length;
     });
@@ -118,23 +121,57 @@
   updateHeader();
 
   document.getElementById("share-menu").addEventListener("click", function () {
-  var message = document.getElementById("share-status");
-  var cleanUrl = window.location.origin + window.location.pathname.replace(/\/index\.html$/, "/") + window.location.search;
-  var shareData = { url: cleanUrl };
-  if (navigator.share) {
-    navigator.share(shareData).then(function () { message.textContent = "منو با موفقیت به اشتراک گذاشته شد."; })
-      .catch(function (error) { if (error.name !== "AbortError") copyLink(); });
-  } else {
-    copyLink();
-  }
-  function copyLink() {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(cleanUrl).then(function () {
-        message.textContent = "پیوند منو در کلیپ‌بورد کپی شد.";
-      }).catch(function () { message.textContent = "امکان کپی خودکار نبود؛ نشانی صفحه را دستی کپی کنید."; });
+    var message = document.getElementById("share-status");
+    var cleanUrl = window.location.origin + window.location.pathname.replace(/\/index\.html$/, "/") + window.location.search;
+    var shareData = { url: cleanUrl };
+    if (navigator.share) {
+      navigator.share(shareData).then(function () {
+        message.textContent = "منو با موفقیت به اشتراک گذاشته شد.";
+      }).catch(function (error) {
+        if (error.name !== "AbortError") copyLink();
+      });
     } else {
-      message.textContent = "برای اشتراک‌گذاری، نشانی این صفحه را کپی کنید.";
+      copyLink();
     }
-  }
-});
+    function copyLink() {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(cleanUrl).then(function () {
+          message.textContent = "پیوند منو در کلیپ‌بورد کپی شد.";
+        }).catch(function () {
+          message.textContent = "امکان کپی خودکار نبود؛ نشانی صفحه را دستی کپی کنید.";
+        });
+      } else {
+        message.textContent = "برای اشتراک‌گذاری، نشانی این صفحه را کپی کنید.";
+      }
+    }
+  });
+
+  // اسکرول هوشمند چیپ‌های دسته‌بندی
+  var chips = document.querySelectorAll(".category-chip");
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function (event) {
+      var rawTarget = chip.getAttribute("href") || "";
+      var cleanId = rawTarget.replace(/^#/, "").trim();
+      if (!cleanId) return;
+
+      var target = document.getElementById(cleanId) ||
+                   document.querySelector('[data-section="' + cleanId + '"]') ||
+                   document.querySelector("#section-" + cleanId);
+
+      if (target) {
+        event.preventDefault();
+        var headerOffset = (header ? header.offsetHeight : 0) + 70;
+        var elementPosition = target.getBoundingClientRect().top;
+        var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+
+        chips.forEach(function (c) { c.classList.remove("active"); });
+        chip.classList.add("active");
+      }
+    });
+  });
 })();
