@@ -75,7 +75,7 @@ button, input {
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;
   background: rgba(52, 37, 29, 0.97);
   color: #fff;
   transition: box-shadow 0.2s ease;
@@ -193,10 +193,87 @@ main#main {
   flex: 1 0 auto;
 }
 
+/* ===================================================
+   نوار چسبان دسته‌بندی منو (Sticky Category Nav Bar)
+   =================================================== */
+.category-nav-bar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 66px;
+  z-index: 95;
+  background: rgba(251, 248, 243, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 4px 16px rgba(61, 39, 25, 0.06);
+  transition: top 0.2s ease;
+}
+
+.site-header.is-compact ~ main .category-nav-bar {
+  top: 52px;
+}
+
+.category-nav-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 10px 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.category-nav-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(61, 39, 25, 0.04);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.category-chip .chip-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.category-chip:hover {
+  background: var(--soft-accent);
+  border-color: var(--gold);
+  color: var(--rust-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(61, 39, 25, 0.08);
+}
+
+.category-chip:active,
+.category-chip.active {
+  background: var(--rust);
+  border-color: var(--rust-dark);
+  color: #ffffff;
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(157, 86, 56, 0.28);
+}
+
 .menu-wrap {
   width: min(1080px, 100%);
   margin: 0 auto;
-  padding: 58px 22px 60px;
+  padding: 38px 22px 60px;
 }
 
 .menu-heading {
@@ -317,6 +394,7 @@ main#main {
   border-radius: 7px;
   overflow: hidden;
   box-shadow: var(--shadow);
+  scroll-margin-top: 130px;
 }
 
 .section-heading {
@@ -329,7 +407,6 @@ main#main {
   border-bottom: 1px solid var(--line);
 }
 
-/* تصاویر کوچک فقط کنار تیتر بخش‌ها */
 .section-image {
   width: 42px;
   height: 42px;
@@ -580,8 +657,17 @@ main#main {
   .hero-note {
     display: none;
   }
+  .category-nav-inner {
+    padding: 8px 16px;
+    gap: 8px;
+  }
+  .category-chip {
+    padding: 7px 13px;
+    font-size: 0.85rem;
+    gap: 5px;
+  }
   .menu-wrap {
-    padding: 43px 16px 46px;
+    padding: 30px 16px 46px;
   }
   .menu-heading {
     display: block;
@@ -683,76 +769,4 @@ main#main {
   background: #ffffff;
   color: #CC0000 !important;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* ===================================================
-   استایل‌های نوار چیپ‌های دسته‌بندی منو (Category Chips)
-   =================================================== */
-.category-nav-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 28px;
-  padding: 6px 4px 10px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* مخفی‌سازی اسکرول‌بار در فایرفاکس */
-}
-
-.category-nav-bar::-webkit-scrollbar {
-  display: none; /* مخفی‌سازی اسکرول‌بار در کروم و سافاری */
-}
-
-.category-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 18px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 30px;
-  color: var(--ink);
-  text-decoration: none;
-  font-size: 0.92rem;
-  font-weight: 500;
-  white-space: nowrap;
-  box-shadow: 0 2px 8px rgba(61, 39, 25, 0.04);
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-  user-select: none;
-}
-
-.category-chip .chip-icon {
-  font-size: 1.15rem;
-  line-height: 1;
-}
-
-.category-chip:hover {
-  background: var(--soft-accent);
-  border-color: var(--gold);
-  color: var(--rust-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(61, 39, 25, 0.08);
-}
-
-.category-chip:active,
-.category-chip.active {
-  background: var(--rust);
-  border-color: var(--rust-dark);
-  color: #ffffff;
-  transform: translateY(0);
-  box-shadow: 0 3px 10px rgba(157, 86, 56, 0.3);
-}
-
-@media(max-width: 680px) {
-  .category-nav-bar {
-    margin: 0 -16px 22px;
-    padding: 4px 16px 8px;
-  }
-  
-  .category-chip {
-    padding: 8px 14px;
-    font-size: 0.86rem;
-    gap: 6px;
-  }
 }
