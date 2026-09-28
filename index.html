@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
   <!-- فایل‌های منو از پوشه data خوانده می‌شوند؛ برای ویرایش نام و قیمت، فایل‌های متنی را اصلاح کنید. -->
-  <!-- Menu data loaded by script.js: data/غذاها.txt, data/چاشنی‌ها.txt, data/صبحانه.txt, data/نوشیدنی‌ها.txt -->
-    <!-- تنظیمات تبدیل به اپلیکیشن (PWA) -->
+  <!-- Menu data loaded by script.js: data/صبحانه.txt, data/غذاها.txt, data/چاشنی‌ها.txt, data/نوشیدنی‌ها.txt -->
+  <!-- تنظیمات تبدیل به اپلیکیشن (PWA) -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1a1a1a">
   
@@ -67,22 +67,49 @@
         <span id="search-hint" class="search-hint">برای نمایش دوباره‌ی همه‌ی موارد، جست‌وجو را پاک کنید.</span>
       </div>
 
+      <!-- نوار چیپ‌های دسته‌بندی سریع -->
+      <nav class="category-nav-bar" aria-label="دسته‌بندی‌های منو">
+        <a href="#breakfast" class="category-chip">
+          <span class="chip-icon">🍳</span>
+          <span class="chip-text">صبحانه</span>
+        </a>
+        <a href="#food" class="category-chip">
+          <span class="chip-icon">🍲</span>
+          <span class="chip-text">غذاها</span>
+        </a>
+        <a href="#condiments" class="category-chip">
+          <span class="chip-icon">🥗</span>
+          <span class="chip-text">چاشنی‌ها</span>
+        </a>
+        <a href="#drinks" class="category-chip">
+          <span class="chip-icon">☕</span>
+          <span class="chip-text">نوشیدنی‌ها</span>
+        </a>
+      </nav>
+
       <div id="menu-status" class="status-message" role="status" aria-live="polite">در حال بارگذاری منو...</div>
       <div id="menu-error" class="error-message" role="alert" hidden></div>
       <div id="menu-sections-list" class="sections-grid">
-        <section class="menu-section" data-section="food" aria-labelledby="title-food">
-          <div class="section-heading"><img class="section-image" src="section-food.png" alt="" aria-hidden="true"><div><h3 id="title-food">غذاها</h3><p>غذاهای کافه</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
-          <div class="item-list" id="items-food"></div>
-        </section>
-        <section class="menu-section" data-section="condiments" aria-labelledby="title-condiments">
-          <div class="section-heading"><img class="section-image" src="section-condiments.png" alt="" aria-hidden="true"><div><h3 id="title-condiments">چاشنی‌ها</h3><p>همراهِ انتخاب شما</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
-          <div class="item-list" id="items-condiments"></div>
-        </section>
-        <section class="menu-section" data-section="breakfast" aria-labelledby="title-breakfast">
+        <!-- ۱. صبحانه -->
+        <section class="menu-section" id="breakfast" data-section="breakfast" aria-labelledby="title-breakfast">
           <div class="section-heading"><img class="section-image" src="section-breakfast.png" alt="" aria-hidden="true"><div><h3 id="title-breakfast">صبحانه</h3><p>شروعی خوش‌مزه</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
           <div class="item-list" id="items-breakfast"></div>
         </section>
-        <section class="menu-section" data-section="drinks" aria-labelledby="title-drinks">
+
+        <!-- ۲. غذاها -->
+        <section class="menu-section" id="food" data-section="food" aria-labelledby="title-food">
+          <div class="section-heading"><img class="section-image" src="section-food.png" alt="" aria-hidden="true"><div><h3 id="title-food">غذاها</h3><p>غذاهای کافه</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
+          <div class="item-list" id="items-food"></div>
+        </section>
+
+        <!-- ۳. چاشنی‌ها -->
+        <section class="menu-section" id="condiments" data-section="condiments" aria-labelledby="title-condiments">
+          <div class="section-heading"><img class="section-image" src="section-condiments.png" alt="" aria-hidden="true"><div><h3 id="title-condiments">چاشنی‌ها</h3><p>همراهِ انتخاب شما</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
+          <div class="item-list" id="items-condiments"></div>
+        </section>
+
+        <!-- ۴. نوشیدنی‌ها -->
+        <section class="menu-section" id="drinks" data-section="drinks" aria-labelledby="title-drinks">
           <div class="section-heading"><img class="section-image" src="section-drinks.png" alt="" aria-hidden="true"><div><h3 id="title-drinks">نوشیدنی‌ها</h3><p>گرم و دل‌چسب</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
           <div class="item-list" id="items-drinks"></div>
         </section>
@@ -106,10 +133,10 @@
       </div>
       <p id="share-status" class="share-status" role="status" aria-live="polite"></p>
     </div>
-          <div class="footer-bottom">
-  <span class="developer-credit">توسعه و برنامه‌نویسی: <a href="https://mazanshop.com" target="_blank" rel="noopener noreferrer">mazanshop.com</a></span>
-  <a href="#top">بازگشت به بالا ↑</a>
-</div>
+    <div class="footer-bottom">
+      <span class="developer-credit">توسعه و برنامه‌نویسی: <a href="https://mazanshop.com" target="_blank" rel="noopener noreferrer">mazanshop.com</a></span>
+      <a href="#top">بازگشت به بالا ↑</a>
+    </div>
   </footer>
 </body>
 </html>
