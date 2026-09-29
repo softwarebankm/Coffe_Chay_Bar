@@ -131,7 +131,7 @@ button, input {
 .hero-photo {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(36, 25, 19, 0.83), rgba(36, 25, 19, 0.57) 48%, rgba(36, 25, 19, 0.25)), url("banne.png") center 52%/cover no-repeat;
+  background: linear-gradient(90deg, rgba(36, 25, 19, 0.83), rgba(36, 25, 19, 0.57) 48%, rgba(36, 25, 19, 0.25)), url("banner.webp") center 52%/cover no-repeat;
 }
 
 .hero-content {
