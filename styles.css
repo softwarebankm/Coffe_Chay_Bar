@@ -770,3 +770,115 @@ main#main {
   color: #CC0000 !important;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
+/* --- استایل بنر PWA کافه چای بار --- */
+.pwa-banner {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  max-width: 460px;
+  margin: 0 auto;
+  background: #34251d;
+  color: #fbf8f3;
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 25px rgba(52, 37, 29, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 99999;
+  border: 1px solid rgba(217, 173, 107, 0.35);
+  animation: pwaSlideDown 0.4s ease-out;
+  direction: rtl;
+  font-family: inherit;
+}
+
+@keyframes pwaSlideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.pwa-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.pwa-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid #d9ad6b;
+  flex-shrink: 0;
+}
+
+.pwa-text {
+  min-width: 0;
+}
+
+.pwa-text h4 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pwa-text p {
+  margin: 3px 0 0;
+  font-size: 0.72rem;
+  color: #d9ad6b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pwa-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pwa-btn {
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.pwa-btn.install {
+  background: #9d5638;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(157, 86, 56, 0.5);
+  border: 1px solid rgba(217, 173, 107, 0.4);
+}
+
+.pwa-btn.install:hover {
+  background: #743a28;
+  transform: translateY(-1px);
+}
+
+.pwa-btn.dismiss {
+  background: rgba(251, 248, 243, 0.12);
+  color: #fbf8f3;
+}
+
+.pwa-btn.dismiss:hover {
+  background: rgba(251, 248, 243, 0.22);
+}
