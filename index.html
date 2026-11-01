@@ -6,23 +6,33 @@
   <meta name="theme-color" content="#34251d">
   <meta name="description" content="منوی کافه چای بار؛ غذا، صبحانه و نوشیدنی‌های کافه.">
   <title>منوی کافه چای بار</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="banner.webp" fetchpriority="high">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
-  <!-- تنظیمات تبدیل به اپلیکیشن (PWA) -->
+
+  <!-- ═══════════════ تنظیمات PWA ═══════════════ -->
   <link rel="manifest" href="manifest.json">
-  
-  <!-- برای آیفون / iOS -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="چای بار">
-  <link rel="apple-touch-icon" href="banner.webp">
+  <link rel="apple-touch-icon" href="icon.svg">
+
+  <!-- ═══════════════ استایل حالت بدون JavaScript ═══════════════ -->
+  <noscript>
+    <style>
+      #menu-status { display: none !important; }
+      .noscript-warning { display: block !important; }
+    </style>
+  </noscript>
 </head>
 <body>
-    <!-- بنر نصب اپلیکیشن کافه چای بار -->
+
+  <!-- ═══════════════ بنر نصب اپلیکیشن ═══════════════ -->
   <div id="pwa-install-banner" class="pwa-banner" style="display: none;">
     <div class="pwa-content">
       <img src="banner.webp" alt="لوگو کافه چای بار" class="pwa-icon">
@@ -36,7 +46,10 @@
       <button id="pwa-dismiss-btn" class="pwa-btn dismiss">بعداً</button>
     </div>
   </div>
+
   <a class="skip-link" href="#main">رفتن به منو</a>
+
+  <!-- ═══════════════ هدر سایت ═══════════════ -->
   <header class="site-header" id="site-header">
     <div class="header-inner">
       <a class="brand" href="#top" aria-label="کافه چای بار، ابتدای صفحه">
@@ -47,7 +60,8 @@
   </header>
 
   <main id="main">
-    <!-- بنر اصلی -->
+
+    <!-- ═══════════════ بخش قهرمان (Hero) ═══════════════ -->
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-photo" aria-hidden="true"></div>
       <div class="hero-content">
@@ -59,7 +73,7 @@
       <span class="hero-note" aria-hidden="true">یک مکثِ خوش‌طعم</span>
     </section>
 
-    <!-- نوار کلیدهای منو: دقیقاً زیر بنر و با حالت چسبان -->
+    <!-- ═══════════════ نوار دسته‌بندی ═══════════════ -->
     <nav class="category-nav-bar" id="category-nav-bar" aria-label="دسته‌بندی‌های منو">
       <div class="category-nav-inner">
         <a href="#breakfast" class="category-chip">
@@ -81,7 +95,13 @@
       </div>
     </nav>
 
+    <!-- ═══════════════ بدنه منو ═══════════════ -->
     <section class="menu-wrap" id="menu-sections" aria-labelledby="menu-title">
+      
+      <div class="noscript-warning" role="alert">
+        برای مشاهده‌ی منو، لطفاً JavaScript را در مرورگر خود فعال کنید.
+      </div>
+
       <div class="menu-heading">
         <div>
           <p class="eyebrow eyebrow-dark">به انتخاب شما</p>
@@ -90,6 +110,7 @@
         <p class="menu-intro">هرچه میل دارید، آرام و با حوصله انتخاب کنید.</p>
       </div>
 
+      <!-- ═══════════════ نوار جست‌وجو ═══════════════ -->
       <div class="menu-tools">
         <label class="search-box" for="menu-search">
           <span class="search-icon" aria-hidden="true">⌕</span>
@@ -101,46 +122,70 @@
       </div>
 
       <div id="menu-status" class="status-message" role="status" aria-live="polite">در حال بارگذاری منو...</div>
+      <div id="menu-warning" class="warning-message" role="status" aria-live="polite" hidden></div>
       <div id="menu-error" class="error-message" role="alert" hidden></div>
+
+      <!-- ═══════════════ شبکه بخش‌های منو ═══════════════ -->
       <div id="menu-sections-list" class="sections-grid">
-        <!-- ۱. صبحانه -->
+        
         <section class="menu-section" id="breakfast" data-section="breakfast" aria-labelledby="title-breakfast">
-          <div class="section-heading"><img class="section-image" src="sobhane.webp" alt="" aria-hidden="true"><div><h3 id="title-breakfast">صبحانه</h3><p>شروعی خوش‌مزه</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
+          <div class="section-heading">
+            <img class="section-image" src="sobhane.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <div><h3 id="title-breakfast">صبحانه</h3><p>شروعی خوش‌مزه</p></div>
+            <span class="section-count"><span class="visually-hidden">تعداد موارد: </span><span class="count-value">۰</span></span>
+          </div>
           <div class="item-list" id="items-breakfast"></div>
         </section>
 
-        <!-- ۲. غذاها -->
         <section class="menu-section" id="food" data-section="food" aria-labelledby="title-food">
-          <div class="section-heading"><img class="section-image" src="ghaza.webp" alt="" aria-hidden="true"><div><h3 id="title-food">غذاها</h3><p>غذاهای کافه</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
+          <div class="section-heading">
+            <img class="section-image" src="ghaza.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <div><h3 id="title-food">غذاها</h3><p>غذاهای کافه</p></div>
+            <span class="section-count"><span class="visually-hidden">تعداد موارد: </span><span class="count-value">۰</span></span>
+          </div>
           <div class="item-list" id="items-food"></div>
         </section>
 
-        <!-- ۳. چاشنی‌ها -->
         <section class="menu-section" id="condiments" data-section="condiments" aria-labelledby="title-condiments">
-          <div class="section-heading"><img class="section-image" src="chashni.webp" alt="" aria-hidden="true"><div><h3 id="title-condiments">چاشنی‌ها</h3><p>همراهِ انتخاب شما</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
+          <div class="section-heading">
+            <img class="section-image" src="chashni.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <div><h3 id="title-condiments">چاشنی‌ها</h3><p>همراهِ انتخاب شما</p></div>
+            <span class="section-count"><span class="visually-hidden">تعداد موارد: </span><span class="count-value">۰</span></span>
+          </div>
           <div class="item-list" id="items-condiments"></div>
         </section>
 
-        <!-- ۴. نوشیدنی‌ها -->
         <section class="menu-section" id="drinks" data-section="drinks" aria-labelledby="title-drinks">
-          <div class="section-heading"><img class="section-image" src="nooshidani.webp" alt="" aria-hidden="true"><div><h3 id="title-drinks">نوشیدنی‌ها</h3><p>گرم و دل‌چسب</p></div><span class="section-count" aria-label="تعداد موارد">۰</span></div>
+          <div class="section-heading">
+            <img class="section-image" src="nooshidani.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <div><h3 id="title-drinks">نوشیدنی‌ها</h3><p>گرم و دل‌چسب</p></div>
+            <span class="section-count"><span class="visually-hidden">تعداد موارد: </span><span class="count-value">۰</span></span>
+          </div>
           <div class="item-list" id="items-drinks"></div>
         </section>
+
       </div>
+
       <p id="no-results" class="no-results" hidden>موردی با این عبارت پیدا نشد. <button type="button" id="reset-search">نمایش همه‌ی منو</button></p>
     </section>
 
+    <!-- ═══════════════ بنر فضای کافه ═══════════════ -->
     <section class="drink-ambience" aria-label="فضای دنج کافه">
       <div class="ambience-image" role="img" aria-label="فنجان قهوه در فضایی گرم و دنج"></div>
-      <div class="ambience-copy"><span class="ambience-kicker">لحظه‌ای برای خودتان</span><p>چای تازه‌دم یا قهوه‌ای خوش‌عطر؟</p></div>
+      <div class="ambience-copy">
+        <span class="ambience-kicker">لحظه‌ای برای خودتان</span>
+        <p>چای تازه‌دم یا قهوه‌ای خوش‌عطر؟</p>
+      </div>
     </section>
+
   </main>
 
+  <!-- ═══════════════ پاورقی سایت ═══════════════ -->
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-brand"><div><strong>کافه چای بار</strong><p>خوشحالیم که انتخاب‌مان کردید</p></div></div>
       <div class="footer-actions">
-        <a class="button button-map" href="https://nshn.ir/7bfZ7l5FYHkn" target="_blank" rel="noopener noreferrer">مسیر‌یابی <span aria-hidden="true">↗</span></a>
+        <a class="button button-map" href="https://nshn.ir/7bfZ7l5FYHkn" target="_blank" rel="noopener noreferrer">مسیریابی <span aria-hidden="true">↗</span></a>
         <button class="button button-share" id="share-menu" type="button">اشتراک‌گذاری منو <span aria-hidden="true">↗</span></button>
       </div>
       <p id="share-status" class="share-status" role="status" aria-live="polite"></p>
@@ -150,5 +195,6 @@
       <a href="#top">بازگشت به بالا ↑</a>
     </div>
   </footer>
+
 </body>
 </html>
